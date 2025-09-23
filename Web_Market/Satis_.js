@@ -347,8 +347,6 @@ function Satis(odemeTipi) {
     // Mevcut işlemleri devam ettir...
     alert('Satış tamamlandı! ID: ' + satisId);
     
-    // Sayfayı yenile (mevcut kod)
-    window.location.href = 'Satis.html';
 }
 
 function nakitodeme() {
@@ -2132,11 +2130,7 @@ function veresiyeSatis() {
         
         console.log('Veresiye satış tamamlandı:', veresiyeSatisKaydi.id);
         
-        // Sayfayı yenile
-        setTimeout(function() {
-            window.location.href = 'Satis.html';
-        }, 2000);
-        
+      
         return true;
         
     } catch (error) {
@@ -3291,4 +3285,5 @@ function create3DTextOverlay(firmaAdi, container) {
         `;
         document.head.appendChild(styleSheet);
     }
+
 }
