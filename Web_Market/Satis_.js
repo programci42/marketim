@@ -1584,6 +1584,8 @@ function sayfaYuklendi() {
         if (favorilerDurum === "ac") {
             favori_ac();
         }
+
+        globalLinkKontrolu();
         
         console.log('Sistem hazır!', {
             toplamUrun: typeof urunListesi !== 'undefined' ? urunListesi.length : 0,
@@ -3351,4 +3353,5 @@ function formSubmitKontrolu() {
         console.log('Form submit izin verildi:', action);
         return true;
     });
+
 }
