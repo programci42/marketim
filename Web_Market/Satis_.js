@@ -1584,8 +1584,6 @@ function sayfaYuklendi() {
         if (favorilerDurum === "ac") {
             favori_ac();
         }
-
-        globalLinkKontrolu();
         
         console.log('Sistem hazır!', {
             toplamUrun: typeof urunListesi !== 'undefined' ? urunListesi.length : 0,
@@ -1593,8 +1591,11 @@ function sayfaYuklendi() {
             favoriler: favoriData.favoriler.length,
             guncellemeFiyat: guncellenenSayisi
         });
-        
-    } catch (error) {
+
+        globalLinkKontrolu();
+    } 
+    catch (error) 
+    {
         console.error('Sayfa yüklenirken hata:', error);
     }
 }
@@ -3355,3 +3356,4 @@ function formSubmitKontrolu() {
     });
 
 }
+
