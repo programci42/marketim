@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=80mm, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/Pos.css">
+    <title>MAKBUZ YAZDIR</title>
+</head>
+<body onload="javascript:makbuzHazirla();">
+    <div class="ticket">
+        <!-- Başlık Bölümü -->
+        <div class="header">
+            <div id="magazaAdi">MAĞAZA ADI</div>
+            <div class="info-line" id="magazaAdres">Adres Bilgisi</div>
+            <div class="info-line" id="magazaTelefon">Tel: 0XXX XXX XX XX</div>
+        </div>
+        
+        <!-- Satış Bilgileri -->
+        <div class="info-line">
+            <strong>Fiş No:</strong> <span id="fisNo">-</span>
+        </div>
+        <div class="info-line">
+            <strong>Tarih:</strong> <span id="satistarihi">-</span>
+        </div>
+        <div class="info-line">
+            <strong>Saat:</strong> <span id="satissaati">-</span>
+        </div>
+        <div class="info-line">
+            <strong>Kasiyer:</strong> <span id="kasiyer">Sistem</span>
+        </div>
+        <div class="info-line">
+            <strong>Ödeme:</strong> <span id="odemeTipi">-</span>
+        </div>
+        
+        <hr style="margin: 3px 0;">
+        
+        <!-- Ürün Tablosu -->
+        <table>
+            <thead>
+                <tr>
+                    <th class="quantity">Adet</th>
+                    <th class="description">Ürün</th>
+                    <th class="price">Tutar</th>
+                </tr>
+            </thead>
+            <tbody id="urunListesi">
+                <!-- Ürünler buraya JavaScript ile eklenecek -->
+            </tbody>
+            <tfoot>
+                <tr class="total-line">
+                    <td class="quantity"></td>
+                    <td class="description"><strong>TOPLAM</strong></td>
+                    <td class="price"><strong><span id="toplamTutar">0.00</span> ₺</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+        
+        <!-- Alt Bilgiler -->
+        <div class="footer">
+            <div>İyi günler dileriz...</div>
+            <div class="info-line">www.firmaadi.com</div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        function makbuzHazirla() {
+    try {
+        // Market bilgilerini localStorage'dan al
+        var marketInfo = JSON.parse(localStorage.getItem('pos_market_bilgileri') || '{}');
+        
+        // Market bilgilerini doldur
+        document.getElementById('magazaAdi').textContent = marketInfo.firmaAdi || 'MAĞAZA ADI';
+        document.getElementById('magazaAdres').textContent = marketInfo.adres || 'Adres Bilgisi';
+        document.getElementById('magazaTelefon').textContent = 'Tel: ' + (marketInfo.telefon || '0XXX XXX XX XX');
+        
+        // Website varsa footer'a ekle
+        if (marketInfo.website) {
+            var footerDiv = document.querySelector('.footer');
+            var websiteDiv = footerDiv.querySelector('.info-line:last-child');
+            if (websiteDiv) {
+                websiteDiv.textContent = marketInfo.website.replace(/^https?:\/\//, '');
+            }
+        }
+        
+        // URL parametrelerini al
+        var urlParams = new URLSearchParams(window.location.search);
+        var satislarVeri = urlParams.get('satislar');
+        var satisId = urlParams.get('satisid');
+        var tarih = urlParams.get('tarih');
+        var odeme = urlParams.get('odeme');
+        
+        if (satislarVeri) {
+            makbuzDoldur(satislarVeri, satisId, tarih, odeme);
+        } else {
+            sonSatisiAl();
+        }
+        
+        // Yazdırma işlemini geciktirilmiş başlat
+        setTimeout(function() {
+            window.print();
+        }, 500);
+        
+    } catch (error) {
+        console.error('Makbuz hazırlanırken hata:', error);
+        alert('Makbuz hazırlanırken hata oluştu!');
+    }
+}
+        
+        // Makbuz verilerini doldur
+        function makbuzDoldur(satislarVeri, satisId, tarih, odeme) {
+            // Fiş bilgilerini doldur
+            document.getElementById('fisNo').textContent = satisId || 'F' + Date.now();
+            
+            if (tarih) {
+                var dt = new Date(tarih);
+                document.getElementById('satistarihi').textContent = dt.toLocaleDateString('tr-TR');
+                document.getElementById('satissaati').textContent = dt.toLocaleTimeString('tr-TR', {
+                    hour: '2-digit', 
+                    minute: '2-digit'
+                });
+            } else {
+                var simdi = new Date();
+                document.getElementById('satistarihi').textContent = simdi.toLocaleDateString('tr-TR');
+                document.getElementById('satissaati').textContent = simdi.toLocaleTimeString('tr-TR', {
+                    hour: '2-digit', 
+                    minute: '2-digit'
+                });
+            }
+            
+            document.getElementById('odemeTipi').textContent = odeme || 'Nakit';
+            
+            // Ürünleri işle ve tabloya ekle
+            var urunler = satislarVeri.split('|').filter(item => item.trim() !== '');
+            var tbody = document.getElementById('urunListesi');
+            var toplamTutar = 0;
+            
+            tbody.innerHTML = ''; // Mevcut içeriği temizle
+            
+            urunler.forEach(function(urunVeri) {
+                var parcalar = urunVeri.split(';');
+                if (parcalar.length >= 3) {
+                    var urunAdi = parcalar[0].trim();
+                    var miktar = parseFloat(parcalar[1]) || 1;
+                    var tutar = parseFloat(parcalar[2]) || 0;
+                    
+                    // Ürün adını kısalt (POS için)
+                    var kisaAd = urunAdi.length > 20 ? 
+                                urunAdi.substring(0, 20) + '...' : urunAdi;
+                    
+                    var row = tbody.insertRow();
+                    row.innerHTML = 
+                        '<td class="quantity">' + miktar + '</td>' +
+                        '<td class="description">' + kisaAd + '</td>' +
+                        '<td class="price">' + tutar.toFixed(2) + ' ₺</td>';
+                    
+                    toplamTutar += tutar;
+                }
+            });
+            
+            document.getElementById('toplamTutar').textContent = toplamTutar.toFixed(2);
+        }
+        
+        // localStorage'dan son satışı al
+        function sonSatisiAl() {
+            try {
+                var satisGecmisi = JSON.parse(localStorage.getItem('pos_satis_gecmisi') || '[]');
+                if (satisGecmisi.length > 0) {
+                    var sonSatis = satisGecmisi[satisGecmisi.length - 1];
+                    
+                    // Satış verisini string formatına çevir
+                    var satislarString = sonSatis.urunler.map(function(urun) {
+                        return urun.urunAdi + ';' + urun.miktar + ';' + urun.aratutar;
+                    }).join('|');
+                    
+                    makbuzDoldur(satislarString, sonSatis.id, sonSatis.tarih, sonSatis.odemeTipi);
+                }
+            } catch (error) {
+                console.error('localStorage\'dan veri alınırken hata:', error);
+            }
+        }
+        
+        // Yazdırma sonrası pencereyi kapat
+        //window.addEventListener('afterprint', function() { setTimeout(function() { window.close(); }, 1000); });
+    </script>
+</body>
+</html>
