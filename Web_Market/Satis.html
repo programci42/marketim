@@ -1,0 +1,1704 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<title>SATIS</title>
+<meta charset="utf-8" />
+<link href = "css/bootstrap.css" rel="stylesheet" />
+<link href = "css/bootstrap.min.css" rel="stylesheet" />
+<link href = "css/bootstrap-grid.css" rel="stylesheet" />
+<link href = "css/bootstrap-reboot.css" rel="stylesheet" />
+<link href = "css/bootstrap-reboot.min.css" rel="stylesheet" />
+<style type="text/css">
+    .ust
+    {
+        width:100%;
+        height:auto;
+        background-color:gainsboro;
+        border-radius:8px;
+        border:inset;
+        border-color:gainsboro;
+    }
+
+    .sol
+    {
+        width:49%;
+        height:75vh;
+        background-color:ivory;
+        border-radius:8px;
+        border:outset;
+        border-color:antiquewhite;
+        float:left;
+        overflow-y:auto;
+    }
+    
+    .orta
+    {
+        width:27%;
+        height:75vh;
+        position:relative;
+        float:left;
+        background-color:azure;
+        border-radius:8px;
+        border:outset;
+        border-color:aquamarine;
+        overflow-y:auto;
+        background-image:none;
+        background-repeat:no-repeat;
+        background-position:bottom;
+    }
+
+    .sag
+    {
+        width:24%;
+        height:75vh;
+        position:relative;
+        float:left;
+        background-color:gainsboro;
+        border-radius:8px;
+        border:outset;
+        border-color:bisque;
+        overflow-y:auto;
+    }
+
+    .lblparasal
+    {
+        font-size:10pt;
+        font-weight:bold;
+        width:100%;
+        font-family:'Verdana';
+    }
+
+    .tblgenel
+    {
+        position:absolute;
+        left:20px;
+        top:20px;
+        width:60%;
+        height:70vh;
+        z-index:3;
+        visibility:hidden;
+        background-color:beige;
+        border:outset;
+        border-radius:8px;
+        overflow-y:auto;
+    }
+
+    .tblfiyatgor
+    {
+        position:absolute;
+        left:25%;
+        top:150px;
+        width:45%;
+        height:auto;
+        z-index:4;
+        visibility:hidden;
+        background-color:azure;
+        border:outset;
+        border-radius:8px;
+        font-family:'MS Reference Sans Serif';
+        font-size:12pt;
+    }
+
+    .tblodeme
+    {
+        position:absolute;
+        left:20%;
+        top:5px;
+        width:30%;
+        height:auto;
+        z-index:5;
+        visibility:hidden;
+        background-color:lightblue;
+        border:outset;
+        border-radius:8px;
+        font-family:'Verdana';
+        font-size:12pt;
+    }
+
+    .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    z-index: 99999;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+/* Modal Container */
+.modal-container {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px 30px;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.8) translateY(-50px);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+.modal-overlay.show .modal-container {
+    transform: scale(1) translateY(0);
+}
+
+/* Modal Icon */
+.modal-icon {
+    margin-bottom: 20px;
+    animation: iconBounce 0.6s ease 0.3s both;
+}
+
+.modal-icon svg {
+    filter: drop-shadow(0 5px 15px rgba(79, 70, 229, 0.3));
+}
+
+/* Modal Content */
+.modal-content {
+    margin-bottom: 30px;
+}
+
+.modal-title {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 15px 0;
+    color: #1a1a1a;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.modal-text {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* Modal Button */
+.modal-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 15px 40px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+    min-width: 140px;
+}
+
+.modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+}
+
+.modal-btn span {
+    position: relative;
+    z-index: 2;
+}
+
+/* Button Shine Effect */
+.btn-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
+}
+
+.modal-btn:hover .btn-shine {
+    left: 100%;
+}
+
+/* Decorative Elements */
+.modal-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    animation: rotate 20s linear infinite;
+    z-index: -1;
+}
+
+.modal-container::after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background: white;
+    border-radius: 15px;
+    z-index: -1;
+}
+
+/* Demo Area */
+.demo-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.demo-area h1 {
+    color: white;
+    font-size: 36px;
+    margin-bottom: 40px;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.demo-btn {
+    background: white;
+    border: none;
+    border-radius: 12px;
+    padding: 15px 30px;
+    margin: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    min-width: 200px;
+}
+
+.demo-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.demo-btn.success {
+    color: #059669;
+}
+
+.demo-btn.warning {
+    color: #d97706;
+}
+
+.demo-btn.info {
+    color: #2563eb;
+}
+
+/* Animations */
+@keyframes iconBounce {
+    0% {
+        transform: scale(0) rotate(180deg);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .modal-container {
+        padding: 30px 20px 20px;
+        margin: 20px;
+    }
+    
+    .modal-title {
+        font-size: 24px;
+    }
+    
+    .modal-text {
+        font-size: 14px;
+    }
+    
+    .demo-area h1 {
+        font-size: 28px;
+        text-align: center;
+    }
+    
+    .demo-btn {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* Developer Modal Styles */
+.dev-modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 999999;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.dev-modal-overlay.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+
+.dev-modal-container {
+    background: #1a1a1a;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 900px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.dev-modal-overlay.show .dev-modal-container {
+    transform: scale(1);
+}
+
+.dev-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: #2a2a2a;
+    border-radius: 12px 12px 0 0;
+    border-bottom: 1px solid #444;
+}
+
+.dev-modal-header h3 {
+    margin: 0;
+    color: #00ff88;
+    font-family: 'Courier New', monospace;
+}
+
+.dev-close-btn {
+    background: #ff4444;
+    border: none;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.dev-modal-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.dev-tabs {
+    display: flex;
+    background: #2a2a2a;
+    border-bottom: 1px solid #444;
+}
+
+.dev-tab-btn {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    padding: 12px 20px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.dev-tab-btn:hover {
+    background: #333;
+    color: #fff;
+}
+
+.dev-tab-btn.active {
+    color: #00ff88;
+    border-bottom-color: #00ff88;
+    background: #333;
+}
+
+.dev-tab-content {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    padding: 15px;
+    overflow: hidden;
+}
+
+.dev-tab-content.active {
+    display: flex;
+}
+
+.dev-toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.dev-btn {
+    background: #444;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background 0.2s ease;
+}
+
+.dev-btn:hover {
+    background: #555;
+}
+
+.dev-btn.save {
+    background: #28a745;
+}
+
+.dev-btn.save:hover {
+    background: #218838;
+}
+
+.dev-btn.run {
+    background: #007bff;
+}
+
+.dev-btn.run:hover {
+    background: #0056b3;
+}
+
+.dev-btn.clear {
+    background: #dc3545;
+}
+
+.dev-btn.clear:hover {
+    background: #c82333;
+}
+
+#jsCodeEditor {
+    flex: 1;
+    background: #1e1e1e;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 14px;
+    resize: none;
+    border-radius: 5px;
+    outline: none;
+}
+
+#jsCodeEditor:focus {
+    border-color: #00ff88;
+}
+
+#savedCodes {
+    flex: 1;
+    overflow-y: auto;
+    background: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.saved-code-item {
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.saved-code-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.saved-code-date {
+    color: #888;
+    font-size: 12px;
+}
+
+.saved-code-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.saved-code-actions button {
+    background: #444;
+    border: none;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.saved-code-preview {
+    color: #ccc;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    max-height: 60px;
+    overflow: hidden;
+    white-space: pre-wrap;
+}
+
+#devConsoleOutput {
+    flex: 1;
+    background: #1e1e1e;
+    border: 1px solid #444;
+    border-radius: 5px;
+    padding: 15px;
+    overflow-y: auto;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.console-log {
+    color: #fff;
+    margin: 2px 0;
+}
+
+.console-error {
+    color: #ff6b6b;
+    margin: 2px 0;
+}
+
+.console-warn {
+    color: #ffd93d;
+    margin: 2px 0;
+}
+
+.dev-console-input {
+    display: flex;
+    gap: 10px;
+}
+
+#consoleInput {
+    flex: 1;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+}
+
+#executeConsole {
+    background: #007bff;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dev-modal-container {
+        width: 95%;
+        height: 90vh;
+    }
+    
+    .dev-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .dev-btn {
+        text-align: center;
+    }
+}
+</style>
+    <script type="text/javascript" src="Genell.js"></script>
+    <script type="text/javascript" src="Satis_.js"></script>
+    <script type="text/javascript" src="urunler.js"></script>
+
+    <script type="text/javascript">
+        var yazlan = false;
+        function odaklan() {
+            if (yazlan == false && (tblmusteriler.style.visibility == "hidden" || tblmusteriler.style.visibility == "") && (divurunlist.style.visibility == "hidden" || divurunlist.style.visibility == "") && (tblfiyatgor.style.visibility == "hidden" || tblfiyatgor.style.visibility == "") && (tblodeme.style.visibility == "hidden" || tblodeme.style.visibility == "")) {
+                txtbarkod.focus();
+            }
+
+            setTimeout(function () { odaklan(); }, 10000);
+        }
+    </script>
+</head>
+<body  onkeydown="yazlan = true;" onkeyup = "yazlan = false;">
+      
+    <form name="frm" id="frm" method="post" action="Satis.html">
+        <input type="hidden" name="musteri" id="txtmusteri" />
+        <input type="hidden" name="satis" id="txtsatis" />
+        <input type="hidden" name="txtodeme" id="txtodeme" />
+        <input type="hidden" name="chcfiyat" id="chcfiyat2" value="false" />
+    </form>
+
+    <iframe id="frmmakbuz" src="" style="position:absolute;z-index:-1;visibility:hidden;"></iframe>
+
+    <!-- Müşteri Kayıt Modal -->
+<div id="divmusterikayit" class="tblgenel" style="width:55%; height:65vh; left:22%; top:12%; z-index:10;">
+    <table class="table table-striped table-hover table-bordered table-responsive-lg table-info">
+        <thead>
+            <tr>
+                <th colspan="2" style="text-align:center;">
+                    <label class="form-control" style="font-size:18pt; font-weight:bold;" 
+                           onmousedown="javascript:surukle=true;" 
+                           onmouseup="javascript:surukle=false;" 
+                           onmouseout="javascript:surukle=false;" 
+                           onmousemove="javascript:if(surukle == true) {gez('divmusterikayit');}">
+                        YENİ MÜŞTERİ KAYDI
+                    </label>
+                </th>
+                <th style="width:10%; text-align:right;">
+                    <a   class="btn btn-danger" onclick="javascript:musteriKayitKapat();">X</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width:30%; font-weight:bold; text-align:right;">Müşteri Adı:</td>
+                <td colspan="2">
+                    <input type="text" id="txtmusteriadi" class="form-control" 
+                           placeholder="Örn: Ahmet Yılmaz" maxlength="50" required />
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right;">Telefon:</td>
+                <td colspan="2">
+                    <input type="tel" id="txtmusteritelefon" class="form-control" 
+                           placeholder="Örn: 0532 123 45 67" maxlength="20" />
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right; vertical-align:top; padding-top:15px;">Adres:</td>
+                <td colspan="2">
+                    <textarea id="txtmusteriadres" class="form-control" rows="3" 
+                              placeholder="Örn: Meram Mahallesi, Yeni Sokak No:15/A Selçuklu/KONYA" 
+                              maxlength="250"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right;">Borç Miktarı:</td>
+                <td colspan="2">
+                    <input type="number" id="txtmusteriborc" class="form-control" 
+                           value="0.00" step="0.01" min="0" readonly 
+                           style="background-color:#f8f9fa; color:#6c757d;" />
+                    <small class="text-muted">Bu alan otomatik hesaplanır, değiştirilemez</small>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align:center; padding-top:20px;">
+                    <a   class="btn btn-success btn-lg" onclick="musteriKaydet()">
+                        <img src="res/Save-icon.png" width="20" height="20" style="margin-right:5px;" />
+                        MÜŞTERİ KAYDET
+                    </a>
+                    &nbsp;&nbsp;
+                    <a   class="btn btn-secondary btn-lg" onclick="musteriKayitKapat()">
+                        <img src="res/cikar.png" width="20" height="20" style="margin-right:5px;" />
+                        İPTAL
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align:center; background-color:#e3f2fd;">
+                    <small class="text-muted">
+                        Müşteri borç bilgileri veresiye satışlarda otomatik güncellenir.
+                    </small>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+    <!-- Market Bilgileri Modal -->
+<div id="divmarketbilgileri" class="tblgenel" style="width:50%; height:60vh; left:25%; top:15%; z-index:10;">
+    <table class="table table-striped table-hover table-bordered table-responsive-lg table-success">
+        <thead>
+            <tr>
+                <th colspan="2" style="text-align:center;">
+                    <label class="form-control" style="font-size:18pt; font-weight:bold;" 
+                           onmousedown="javascript:surukle=true;" 
+                           onmouseup="javascript:surukle=false;" 
+                           onmouseout="javascript:surukle=false;" 
+                           onmousemove="javascript:if(surukle == true) {gez('divmarketbilgileri');}">
+                        MARKET BİLGİLERİ
+                    </label>
+                </th>
+                <th style="width:10%; text-align:right;">
+                    <a   class="btn btn-danger" onclick="javascript:marketBilgileriKapat();">X</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width:30%; font-weight:bold; text-align:right;">Firma Adı:</td>
+                <td colspan="2">
+                    <input type="text" id="txtfirmaadi" class="form-control" 
+                           placeholder="Örn: Konya Market" maxlength="50" />
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right;">Telefon:</td>
+                <td colspan="2">
+                    <input type="tel" id="txttelefon" class="form-control" 
+                           placeholder="Örn: 0332 123 45 67" maxlength="20" />
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right;">Web Sitesi:</td>
+                <td colspan="2">
+                    <input type="url" id="txtwebsite" class="form-control" 
+                           placeholder="Örn: www.konyamarket.com" maxlength="100" />
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right; vertical-align:top; padding-top:15px;">Adres:</td>
+                <td colspan="2">
+                    <textarea id="txtadres" class="form-control" rows="3" 
+                              placeholder="Örn: Meram Caddesi No:123 Selçuklu/KONYA" 
+                              maxlength="200"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align:center; padding-top:20px;">
+                    <a   class="btn btn-success btn-lg" onclick="marketBilgileriKaydet()">
+                        <img src="res/Save-icon.png" width="20" height="20" style="margin-right:5px;" />
+                        KAYDET
+                    </a>
+                    &nbsp;&nbsp;
+                    <a   class="btn btn-secondary btn-lg" onclick="marketBilgileriKapat()">
+                        <img src="res/cikar.png" width="20" height="20" style="margin-right:5px;" />
+                        İPTAL
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align:center; background-color:#f8f9fa;">
+                    <small class="text-muted">
+                        Bu bilgiler makbuzlarda görünecek ve tarayıcınızda saklanacaktır.
+                    </small>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+    <div id="tblmusteriler" class="tblgenel">
+        <table class="table table-striped table-hover table-bordered table-responsive-lg table-warning">
+            <thead>
+                <tr>
+                    <th colspan="2" style="text-align:center;">
+                    <label class="form-control" onmousedown="javascript:surukle=true;" onmouseup="javascript:surukle=false;" onmouseout="javascript:surukle=false;" onmousemove="javascript:if(surukle == true) {gez('tblmusteriler');}">MÜŞTERİ LİSTESİ</label>
+                    </th>
+                    <th><a   class="btn btn-success btn-block" onclick="javascript:musteriKayitAc();"><img src="res/Add-icon.png" width="20" height="20" />&nbsp;&nbsp;YENİ MÜŞTERİ EKLE</a></th>
+                    <th style="width:20%; text-align:right;"><a   class="btn btn-danger " onclick="javascript:tblmusteriler.style.visibility = 'hidden'; lblmesaj.innerText = ''; txtmusteri.value = '0'; txtbarkod.focus();">X</a></th>
+                </tr>
+                <tr>
+                <th style="text-align:center; width:10%;"><label>Seç</label></th>
+                <th style="text-align:center;"><label>Müşeri Adı</label></th> 
+                <th style="text-align:center;"><label>Adres</label></th>
+                <th style="text-align:center;"><label>Borç Miktarı</label></th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <div id="divurunlist" class="tblgenel" style="overflow-y:scroll; max-height: 600px;">
+        <div>
+            <table class="table table-striped table-hover table-bordered table-responsive-lg table-primary">
+                <thead>
+                    <tr>
+                        <th colspan="4">
+                            <label class="form-control" style="font-size:20pt; font-weight:bold; text-align:center;" onmousedown="javascript:surukle=true;" onmouseup="javascript:surukle=false;" onmouseout="javascript:surukle=false;" onmousemove="javascript:if(surukle == true) {gez('divurunlist');}">ÜRÜNLER</label>
+                        </th>
+                        <th style="text-align:right; width:80px;">
+                            <a   class="btn btn-danger" onclick="javascript:divurunlist.style.visibility = 'hidden'; txtbarkod.focus();">X</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                   <tr>
+                       <td colspan="3"><label style="font-size:12pt; font-weight:bold;">BARKOD</label></td>
+                       <td colspan="2" style="width:50%; text-align:center;"><label style="font-size:12pt; font-weight:bold;">ÜRÜN ADI</label></td>
+                   </tr>
+                    <tr>
+                        <td colspan="3"><input type="text" class="form-control" /></td>
+                        <td colspan="2"><input type="text" class="form-control" id="txturunadi2" onkeydown="if(event.keyCode == 13) { kayitara('tblurunler', 'txturunadi2', 2); }" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="overflow-y:scroll; height:70%;">
+        <table class="table table-striped table-hover table-bordered table-responsive-lg table-primary">   
+            <thead>
+            <tr>
+            <th style="text-align:center;"><label>SE&Ccedil;</label></th>
+            <th style="text-align:center;"><label>BARKOD</label></th>
+            <th style="text-align:center;"><label>&Uuml;R&Uuml;N ADI</label></th>
+            <th style="text-align:center;"><label>FIYATI</label></th>
+            </tr>
+            </thead>         
+            <tbody id="tblurunler">
+                
+            </tbody>
+            <tfoot>
+                <tr><td colspan="4"><label>Toplam Ürün Sayısı</label></td></tr>
+            </tfoot>
+        </table>
+         </div>
+    </div>
+
+    <!-- Ürün Kayıt Modal -->
+<div id="divurunkayit" class="tblgenel" style="width:60%; height:70vh; left:20%; top:10%; z-index:10;">
+    <table class="table table-striped table-hover table-bordered table-responsive-lg table-primary">
+        <thead>
+            <tr>
+                <th colspan="2" style="text-align:center;">
+                    <label class="form-control" style="font-size:18pt; font-weight:bold;" 
+                           onmousedown="javascript:surukle=true;" 
+                           onmouseup="javascript:surukle=false;" 
+                           onmouseout="javascript:surukle=false;" 
+                           onmousemove="javascript:if(surukle == true) {gez('divurunkayit');}">
+                        YENİ ÜRÜN KAYDI
+                    </label>
+                </th>
+                <th style="width:10%; text-align:right;">
+                    <a   class="btn btn-danger" onclick="javascript:urunKayitKapat();">X</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width:30%; font-weight:bold; text-align:right;">Barkod:</td>
+                <td colspan="2">
+                    <input type="text" id="txtyeniurun_barkod" class="form-control" 
+                           placeholder="Örn: 8690705032073" maxlength="20" required 
+                           onkeydown="if(event.keyCode == 13) { document.getElementById('txtyeniurun_adi').focus(); }" />
+                    <small class="text-muted">Ürünün benzersiz barkod numarası</small>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right;">Ürün Adı:</td>
+                <td colspan="2">
+                    <input type="text" id="txtyeniurun_adi" class="form-control" 
+                           placeholder="Örn: Coca Cola 330ml" maxlength="100" required
+                           onkeydown="if(event.keyCode == 13) { document.getElementById('txtyeniurun_stok').focus(); }" />
+                    <small class="text-muted">Ürünün tam adı</small>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right;">Stok Kodu:</td>
+                <td colspan="2">
+                    <input type="text" id="txtyeniurun_stok" class="form-control" 
+                           placeholder="Örn: ST00001 (boş bırakılırsa otomatik)" maxlength="20"
+                           onkeydown="if(event.keyCode == 13) { document.getElementById('txtyeniurun_fiyat').focus(); }" />
+                    <small class="text-muted">Boş bırakılırsa otomatik oluşturulur</small>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right;">Fiyat (₺):</td>
+                <td colspan="2">
+                    <input type="number" id="txtyeniurun_fiyat" step="0.01" min="0" class="form-control" 
+                           placeholder="Örn: 3.50" style="text-align:right; font-weight:bold;"
+                           onkeydown="if(event.keyCode == 13) { document.getElementById('txtyeniurun_birim').focus(); }" />
+                    <small class="text-muted">Ürünün satış fiyatı</small>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold; text-align:right;">Birim:</td>
+                <td colspan="2">
+                    <select id="txtyeniurun_birim" class="form-control">
+                        <option value="ADET" selected>ADET</option>
+                        <option value="KG">KG</option>
+                        <option value="GRAM">GRAM</option>
+                        <option value="LITRE">LITRE</option>
+                        <option value="ML">ML</option>
+                        <option value="METRE">METRE</option>
+                        <option value="CM">CM</option>
+                        <option value="PAKET">PAKET</option>
+                    </select>
+                    <small class="text-muted">Ürünün satış birimi</small>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="background-color:#f8f9fa; padding:15px;">
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Önizleme:</strong><br>
+                            <small class="text-muted">
+                                ID: <span id="lblyeni_id">Otomatik</span><br>
+                                Barkod: <span id="lblyeni_barkod">-</span><br>
+                                Ürün: <span id="lblyeni_urun">-</span><br>
+                                Stok: <span id="lblyeni_stok">Otomatik</span><br>
+                                Fiyat: <span id="lblyeni_fiyat">0.00 ₺</span>
+                            </small>
+                        </div>
+                        <div class="col-6">
+                            <a   class="btn btn-info btn-sm btn-block" onclick="urunOnizlemeGuncelle()">
+                                🔄 Önizleme Güncelle
+                            </a>
+                            <a   class="btn btn-warning btn-sm btn-block" onclick="barkodKontrolEt()">
+                                🔍 Barkod Kontrol Et
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align:center; padding-top:20px;">
+                    <a   class="btn btn-success btn-lg" onclick="yeniUrunKaydet()">
+                        <img src="res/Save-icon.png" width="20" height="20" style="margin-right:5px;" />
+                        ÜRÜN KAYDET
+                    </a>
+                    &nbsp;&nbsp;
+                    <a   class="btn btn-secondary btn-lg" onclick="urunKayitKapat()">
+                        <img src="res/cikar.png" width="20" height="20" style="margin-right:5px;" />
+                        İPTAL
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" style="text-align:center; background-color:#cce5ff;">
+                    <small class="text-primary">
+                        <strong>💡 İpucu:</strong> Barkod okuyucu ile barkod okutabilir, 
+                        Enter tuşu ile alanlar arasında geçiş yapabilirsiniz.
+                    </small>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Veri Yönetimi Modal -->
+<div id="divveriyonetimi" class="tblgenel" style="width:70%; height:80vh; left:15%; top:5%; z-index:10;">
+    <table class="table table-striped table-hover table-bordered table-responsive-lg table-dark">
+        <thead>
+            <tr>
+                <th colspan="2" style="text-align:center;">
+                    <label class="form-control" style="font-size:18pt; font-weight:bold; background-color:#343a40; color:white;" 
+                           onmousedown="javascript:surukle=true;" 
+                           onmouseup="javascript:surukle=false;" 
+                           onmouseout="javascript:surukle=false;" 
+                           onmousemove="javascript:if(surukle == true) {gez('divveriyonetimi');}">
+                        📊 VERİ YÖNETİMİ & YEDEKLEME
+                    </label>
+                </th>
+                <th style="width:10%; text-align:right;">
+                    <a   class="btn btn-danger" onclick="javascript:veriYonetimiKapat();">X</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- MEVCUT VERİ İSTATİSTİKLERİ -->
+            <tr style="background-color:#495057;">
+                <td colspan="3" style="text-align:center; color:white;">
+                    <h5>📈 MEVCUT VERİ İSTATİSTİKLERİ</h5>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:40%; font-weight:bold;">📦 Ürünler:</td>
+                <td style="width:30%;" id="stat_urunler">-</td>
+                <td style="width:30%;" id="stat_urunler_boyut">-</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">💰 Fiyatlar:</td>
+                <td id="stat_fiyatlar">-</td>
+                <td id="stat_fiyatlar_boyut">-</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">🛒 Satışlar:</td>
+                <td id="stat_satislar">-</td>
+                <td id="stat_satislar_boyut">-</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">👥 Müşteriler:</td>
+                <td id="stat_musteriler">-</td>
+                <td id="stat_musteriler_boyut">-</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">⭐ Favoriler:</td>
+                <td id="stat_favoriler">-</td>
+                <td id="stat_favoriler_boyut">-</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">📊 Günlük Satışlar:</td>
+                <td id="stat_gunluk">-</td>
+                <td id="stat_gunluk_boyut">-</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">🏪 Market Bilgileri:</td>
+                <td id="stat_market">-</td>
+                <td id="stat_market_boyut">-</td>
+            </tr>
+            <tr>
+                <td style="font-weight:bold;">💳 Veresiye Satışlar:</td>
+                <td id="stat_veresiye">-</td>
+                <td id="stat_veresiye_boyut">-</td>
+            </tr>
+            <tr style="background-color:#28a745;">
+                <td style="font-weight:bold; color:white;">📊 TOPLAM VERİ:</td>
+                <td style="font-weight:bold; color:white;" id="stat_toplam_kayit">-</td>
+                <td style="font-weight:bold; color:white;" id="stat_toplam_boyut">-</td>
+            </tr>
+
+            <!-- VERİ İŞLEMLERİ -->
+            <tr style="background-color:#495057;">
+                <td colspan="3" style="text-align:center; color:white;">
+                    <h5>🔧 VERİ İŞLEMLERİ</h5>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align:center; padding:20px;">
+                    <div class="row">
+                        <div class="col-6">
+                            <a   class="btn btn-success btn-lg btn-block" onclick="tumVerileriYedekle()">
+                                <img src="res/Save-icon.png" width="24" height="24" /><br>
+                                <strong>TÜM VERİLERİ YEDEKLE</strong><br>
+                                <small>Tüm verileri tek dosyada indir</small>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <label for="fileYedekYukle" class="btn btn-primary btn-lg btn-block" style="margin-bottom:0;">
+                                <img src="res/gerial.png" width="24" height="24" /><br>
+                                <strong>YEDEK YÜKLE</strong><br>
+                                <small>Yedek dosyasından geri yükle</small>
+                            </label>
+                            <input type="file" id="fileYedekYukle" accept=".json" style="display:none;" onchange="yedekDosyasiYukle(this)" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align:center; padding:10px;">
+                    <div class="row">
+                        <div class="col-4">
+                            <a   class="btn btn-warning btn-block" onclick="veriIstatistikleriGuncelle()">
+                                🔄 İstatistikleri Yenile
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a   class="btn btn-info btn-block" onclick="veriTemizlikAraclari()">
+                                🧹 Temizlik Araçları
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a   class="btn btn-secondary btn-block" onclick="gelismisVeriSecenekleri()">
+                                ⚙️ Gelişmiş Seçenekler
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr style="background-color:#343a40;">
+                <td colspan="3" style="text-align:center; color:white;">
+                    <small>
+                        <strong>💡 İpucu:</strong> Düzenli yedekleme yaparak verilerinizi güvende tutun. 
+                        Yedek dosyaları güvenli bir yerde saklayın.
+                    </small>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Temizlik Araçları Alt Modal -->
+<div id="divtemizlikaraclari" class="tblgenel" style="width:50%; height:60vh; left:25%; top:15%; z-index:11; visibility:hidden;">
+    <table class="table table-striped table-hover table-bordered table-responsive-lg table-warning">
+        <thead>
+            <tr>
+                <th colspan="2" style="text-align:center;">
+                    <label class="form-control" style="font-size:16pt; font-weight:bold;">
+                        🧹 TEMİZLİK ARAÇLARI
+                    </label>
+                </th>
+                <th style="width:10%; text-align:right;">
+                    <a   class="btn btn-danger btn-sm" onclick="javascript:document.getElementById('divtemizlikaraclari').style.visibility='hidden';">X</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width:60%;">Eski Satışları Temizle (30 günden eski):</td>
+                <td colspan="2">
+                    <a   class="btn btn-warning btn-sm" onclick="eskiSatislariTemizle()">Temizle</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Kullanılmayan Fiyatları Temizle:</td>
+                <td colspan="2">
+                    <a   class="btn btn-warning btn-sm" onclick="kullanilmayanFiyatlariTemizle()">Temizle</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Tüm Favorileri Temizle:</td>
+                <td colspan="2">
+                    <a   class="btn btn-danger btn-sm" onclick="tumFavorileriTemizle()">Temizle</a>
+                </td>
+            </tr>
+            <tr style="background-color:#dc3545;">
+                <td style="color:white; font-weight:bold;">TÜM VERİLERİ SİL:</td>
+                <td colspan="2">
+                    <a   class="btn btn-dark btn-sm" onclick="tumVerileriSil()">⚠️ HEPSİNİ SİL</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="tblfiyatgor" class="tblfiyatgor">
+    <table class="table table-striped table-hover table-bordered table-responsive-lg table-success">
+        <thead>
+            <tr>
+                <th colspan="2" style="text-align:center;">
+                    <label class="form-control" style="height:45px;" 
+                           onmousedown="javascript:surukle=true;" 
+                           onmouseup="javascript:surukle=false;" 
+                           onmouseout="javascript:surukle=false;" 
+                           onmousemove="javascript:if(surukle == true) {gez('tblfiyatgor');}">
+                        FİYAT GÖRÜNTÜLE/GÜNCELLE
+                    </label>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="width:70%;"><input type="text" id="txtbarkod2" class="form-control" placeholder="Barkod okutun veya girin" onkeydown="if (event.keyCode == 13) {fiyatgor();}" /></td>
+                <td><a   class="btn btn-primary btn-block" onclick="javascript:fiyatgor();">
+                    <img src="res/find.png" alt="" /> &nbsp;&nbsp;ARA
+                </a></td>
+            </tr>
+            <tr>
+                <td><input type="text" id="txturunadi" class="form-control" readonly="readonly" placeholder="Ürün adı" /></td>
+                <td><input type="text" id="txtmevcut_fiyat" style="text-align:right;" class="form-control" readonly="readonly" placeholder="Mevcut fiyat" /></td>
+            </tr>
+            <!-- YENİ SATIR: GÜNCELLENECEk FİYAT -->
+            <tr>
+                <td style="font-weight:bold; text-align:right; vertical-align:middle; background-color:#e8f5e8;">
+                    Yeni Fiyat (₺):
+                </td>
+                <td>
+                    <input type="number" id="txtyeni_fiyat" step="0.01" min="0" class="form-control" 
+                           style="text-align:right; font-size:14pt; font-weight:bold; border-color:#28a745;" 
+                           placeholder="0.00" onkeydown="if (event.keyCode == 13) {fiyatGuncelleKaydet();}" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center; background-color:#f8f9fa;">
+                    <small class="text-muted">
+                        <strong>Son Güncelleme:</strong> <span id="lblson_guncelleme">-</span>
+                    </small>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>
+                    <a   class="btn btn-success btn-block" onclick="javascript:fiyatGuncelleKaydet();">
+                        <img src="res/Save-icon.png" alt="" width="16" height="16" /> &nbsp;FİYAT GÜNCELLE
+                    </a>
+                </td>
+                <td>
+                    <a   class="btn btn-danger btn-block" onclick="javascript:fiyatModalKapat();">
+                        <img src="res/cikar.png" alt="" width="16" height="16" /> &nbsp;KAPAT
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+    <div id="tblodeme" class="tblodeme">
+        <table class="table table-striped table-bordered table-hover table-primary">
+            <thead>
+            <tr><th colspan="4">
+            <label class="form-control" onmousedown="javascript:surukle=true;" onmouseup="javascript:surukle=false;" onmouseout="javascript:surukle=false;" onmousemove="javascript:if(surukle == true) {gez('tblodeme');}">&Ouml;DEME</label>
+            </th></tr>
+            <tr><th colspan="2" style="text-align:center;"><label>TUTAR</label></th><th colspan="2" style="text-align:center;"><label>ÖDENEN</label></th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">
+                    <input type="text" class="form-control" id="txttutar" readonly="readonly" style="font-family:'MS Reference Sans Serif'; font-size:12pt; font-weight:bold; color:blue; text-align:right;" /></td>
+                    <td colspan="2">
+                   <input type="text" id="txtodenen" class="form-control"  style="font-family:'MS Reference Sans Serif'; font-size:12pt; font-weight:bold; color:blue; text-align:right;"  onchange="javascript:odeme();" onkeyup="javascript:odeme();" />
+                    </td>
+                </tr>
+                <tr><td colspan="2" style="text-align:center;"><label style="font-size:12pt; font-weight:bold;">KALAN</label></td>
+                    <td colspan="2" style="text-align:center;"><label style="font-size:12pt; font-weight:bold;">PARA&nbsp;ÜSTÜ</label></td></tr>
+                <tr>
+                <td colspan="2"><input type="text"  id="txtkalan" class="form-control" readonly="readonly"  style="font-family:'MS Reference Sans Serif'; font-size:12pt; font-weight:bold; color:maroon; text-align:right;" /></td>
+                <td colspan="2"><input type="text"  id="txtparaustu" class="form-control" readonly="readonly"  style="font-family:'MS Reference Sans Serif'; font-size:12pt; font-weight:bold; color:green; text-align:right;" />
+                </td></tr>
+                <tr>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '7'; odeme();">7</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '8'; odeme();">8</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '9'; odeme();">9</a></td>
+                    <td rowspan="3">
+                        <a   class="btn btn-block btn-light  lblparasal" style="height:200px;" onclick="javascript:if(txtodenen.value != '') {txtodenen.value = txtodenen.value.toString().slice(0, txtodenen.value.toString().length - 1);} odeme();">
+                        S<br />
+                        İ<br />
+                        L<br />
+                    </a></td>
+                </tr>
+                <tr>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '4'; odeme();">4</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '5'; odeme();">5</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '6'; odeme();">6</a></td>
+                </tr>
+                <tr>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '1'; odeme();">1</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '2'; odeme();">2</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '3'; odeme();">3</a></td>
+                </tr>
+                <tr>
+                    <td colspan="3"><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + '0'; odeme();">0</a></td>
+                    <td colspan="1"><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtodenen.value = txtodenen.value + ','; odeme();">,</a></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr><td colspan="2"><a   class="btn btn-danger btn-block btn-sm" onclick="javascript:tblodeme.style.visibility = 'hidden'; txtbarkod.focus();">İPTAL</a></td>
+                    <td colspan="2"><a   class="btn btn-success btn-block btn-sm" onclick="javascript:Satis('Nakit');">TAMAM</a></td></tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div id="divust" class="ust">
+        <table class="table table-striped table-hover table-bordered table-responsive-lg table-info">
+            <thead><tr><th colspan="4" style="text-align: center;"><label id="lblbbaslik" class="form-control" style="font-weight: bold; font-family: 'Segoe UI'; font-size: 15pt; color: maroon;">BARKODLU MARKET SATIŞ PROGRAMI</label></th></tr></thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: center;"><label id="lblsecilimusteri" style="font-weight: bold; color:black; height: 30px; font-family: 'Segoe UI';">SEÇİLİ MÜŞTERİ: </label></td>
+                    <td><label id="lblmiktar" class="form-control" style="font-family:'MS Reference Sans Serif'; font-size:15pt; font-weight:bold;">MİKTAR X1</label></td>
+                    <td style="width:70%;"><input type="text" id="txtbarkod" onkeydown="javascript:yeniUrunArama(event);" style="font-family:'MS Reference Sans Serif'; font-size:22pt; background-color:#FAFE87; font-weight:bold; border:solid; width:100%; margin:5px; border-color:rebeccapurple; border-radius:5px;" onclick="javascript:txtbarkod.value = '';" /></td>
+                    <td><label id="lblgeneltutar" style="color:white;background-Color:Blue;margin:2px;padding:10px;font-weight:bold;font-size:16pt;font-family:Verdana;border-radius:6px;border:outset;border-color:Blue;width:100%;text-align:center;">0</label></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr><td colspan="4" style="text-align:center;"><label id = "lblmesaj" style="font-family:'MS Reference Sans Serif'; font-size:12pt; font-weight:bold;"></label></td></tr>
+            </tfoot>
+        </table>
+        
+    </div>
+    
+    <div id="customModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="#4F46E5"/>
+                    <path d="M12 8v4M12 16h.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="modal-content">
+                <h2 id="modalTitle" class="modal-title">Bilgi</h2>
+                <p id="modalMessage" class="modal-text">Mesajınız burada görünecek</p>
+            </div>
+            <button id="modalOkBtn" class="modal-btn" onclick="javascript:closeModal();">
+                <span>Tamam</span>
+                <div class="btn-shine"></div>
+            </button>
+        </div>
+    </div>
+
+    <div id="divsol" class="sol">
+        <table class="table table-striped table-hover table-bordered table-primary table-responsive-md">
+            <thead>
+              <tr>
+                  <th colspan="5"><input type="checkbox" style="width: 25px; height: 25px;" id="chcfiyat" checked="true" onclick="javascript:chcfiyat2.value = chcfiyat.checked; txtbarkod.focus();" onchange="javascript:txtbarkod.focus();" />&nbsp;
+                  <label for="chcfiyat" style="font-size:12pt; font-weight:bold; margin:15px; font-family:'MS Reference Sans Serif';">Satış sonrası ürünlerin fiyatlarını da güncelle</label></th>
+              </tr>
+            <tr>
+                <td colspan="5" style="width:20%;">
+                <a   class="btn btn-light" onclick="javascript:musteriListesiAc();" style="width: 120px;"><img src="res/carira.png" width="24" height="24" class="img-fluid" />&nbsp;M&uuml;&#351;teri&nbsp;Se&ccedil;</a>&nbsp;&nbsp;
+
+                <a   class="btn btn-light" onclick="javascript:musteriKayitAc();" style="width: 150px;"><img src="res/carira.png" width="24" height="24" class="img-fluid" />&nbsp;M&uuml;&#351;teri&nbsp;Kaydet</a>&nbsp;&nbsp;
+                
+                <a   style="font-weight:bold; color:#28a745; width: 120px;" class="btn btn-light" onclick="javascript:tbl = 'tbluruns'; divurunlist.style.visibility = 'visible';"><img src="res/Add-icon.png" />&nbsp;&nbsp;&Uuml;r&uuml;n&nbsp;Ekle</a>&nbsp;&nbsp;
+
+                <a   class="btn btn-light" onclick="javascript:urunKayitAc();" style="width: 120px;"><img src="res/Add-icon.png" width="22" height="22" />&nbsp;&nbsp;Yeni Ürün Kaydet</a>&nbsp;&nbsp;
+                
+                <a   class="btn btn-light" style="width: 120px;" onclick="javascript:veriYonetimiAc();"><img src="res/database.png" width="22" height="22" />&nbsp;&nbsp;Veri Yönetimi</a>&nbsp;&nbsp;
+
+                <a   class="btn btn-light" style="font-weight:bold; width: 120px;" onclick="javascript:Makbuz();"><img src="res/stok.png" width="22" height="22" />&nbsp;&nbsp;Fi&#351;&nbsp;&nbsp;</a>
+                </td>
+            </tr>
+                
+                <tr>
+                <th style="text-align: center;">SİL</th>
+                <th style="width:45%;"><center><label>STOK_ADI</label></center></th>
+                <th><center><label>&Uuml;R&Uuml;N_F&#304;YATI</label></center></th>
+                <th><center><label>&Uuml;R&Uuml;N_MİKTARI</label></center></th>
+                <th style="width:15%;"><center><label>ARA_TUTAR</label></center></th>
+                </tr>
+            </thead>
+            <tbody id="tbluruns">
+               
+            </tbody>
+            <tfoot>
+                <tr><td colspan="6"></td></tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div id="divorta" class="orta"> 
+        <table class="table table-striped table-success table-bordered table-hover">
+            
+             <tbody>
+                <tr>
+                    <td><a   class="btn btn-block btn-light " onclick="javascript:nakitodeme();"><img src="res/payment-icon.png" width="22" height="22" />&nbsp;Nakit</a></td>
+                    <td><a   class="btn btn-block btn-light " onclick="javascript:if(tbluruns.rows.length == 0) { alert('Satmak icin bi sey sec!'); return; } if (window.confirm('POS satisi yapilsin mi?') == true) { Satis('Pos'); }"><img src="res/card.png"  width="22" height="22" />&nbsp;Pos</a></td>
+                </tr>
+                <tr>
+                    <td><a   class="btn btn-block btn-light " onclick="javascript:veresiye();"><img src="res/cari_kart.png" width="22" height="22" />&nbsp;Veresiye</a></td>
+                    <td><a   class="btn btn-block btn-light " onclick="javascript:if(window.confirm('Bu satis iptal edilsin mi?') == true) { satisSonrasiTemizlik(); }"><img src="res/Satis_yok.png" width="22" height="22" />&nbsp;Satış iptal</a></td>
+                </tr>
+                <!--
+                <tr>
+                    <td><a   class="btn btn-block btn-light "><img src="res/wait-icon.png" width="22" height="22" />&nbsp;Beklet</a></td>
+                    <td><a   class="btn btn-block btn-light "><img src="res/find.png" width="22" height="22" />&nbsp;Bekleme Listesi</a></td></tr>
+                    -->
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                <td colspan="1">
+                <a   class="btn btn-light btn-block " onclick="javascript:tblfiyatgor.style.visibility = 'visible'; txtbarkod2.value = ''; txturunadi.value = ''; txtfiyat.value = '0'; txtbarkod2.focus();">
+                <img src="res/ticket-icon.png" alt=""  width="22" height="22" />&nbsp;&nbsp;Fiyat&nbsp;G&ouml;r</a></td>
+                <td><a   class="btn btn-light btn-block" onclick="javascript:favori_ac();"><img src="res/yildiz.png" alt="" width="22" height="22" />&nbsp;Favoriler</a></td>
+                </tr>
+                <tr>
+                    <td colspan="1"><a   class="btn btn-block btn-light" onclick="javascript:gecmisSatislariAc();"><img src="res/history.png" width="22" height="22" />&nbsp;Geçmiş Satışlar</a></td>
+                    <td><a   class="btn btn-block btn-light" onclick="javascript:marketBilgileriAc();"><img src="res/marketim.png" width="22" height="22" />&nbsp;Market Bilgileri</a></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <table class="table table-striped table-info table-bordered table-hover">            
+            <tbody>
+                <tr>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '7';">7</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '8';">8</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '9';">9</a></td>
+                    <td><a   class="btn btn-block btn-secondary  lblparasal" onclick="javascript:yeniKatsayi();">x</a></td>
+                </tr>
+                <tr>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '4';">4</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '5';">5</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '6';">6</a></td>
+                    <td><a   class="btn btn-block btn-danger  lblparasal" onclick="javascript:if(txtbarkod.value != '') {txtbarkod.value = txtbarkod.value.toString().slice(0, txtbarkod.value.toString().length - 1);}">SİL</a></td>
+                </tr>
+               <tr>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '1';">1</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '2';">2</a></td>
+                    <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '3';">3</a></td>
+                    <td rowspan="2"><a   class="btn btn-block btn-success  lblparasal">
+                        E<br />
+                        N<br />
+                        T<br />
+                        E<br />
+                        R<br />
+                    </a></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '0';">0</a></td>
+                    <td colspan="1"><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + ',';">,</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="divsag" class="sag">
+        <table class="table table-striped table-hover table-bordered table-warning table-responsive-md">
+            <thead>
+                <tr>
+                <th><label class="form-control"><img src="res/yildiz.png" width="22" height="22" />&nbsp;FAVORI ÜRÜNLER</label></th>
+                <th style="text-align:right;"><a   class="btn btn-danger" title="KAPAT" onclick="javascript:favori_kapat();">X</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2"><a   class="btn btn-block btn-light" onclick="javascript:tbl = 'tblhaziruruns'; divurunlist.style.visibility = 'visible';"><img src="res/Add-icon.png" alt="Favoriler" />&nbsp;ÜRÜN&nbsp;EKLE</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-striped table-hover table-bordered table-warning table-responsive-md">
+            <tbody id="tblhaziruruns">
+               
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Geçmiş Satışlar Modal -->
+<div id="divgecmissatislar" class="tblgenel" style="width:80%; height:85vh; left:10%; top:5%;">
+    <table class="table table-striped table-hover table-bordered table-responsive-lg table-info">
+        <thead>
+            <tr>
+                <th colspan="6" style="text-align:center;">
+                    <label class="form-control" style="font-size:18pt; font-weight:bold;" 
+                           onmousedown="javascript:surukle=true;" 
+                           onmouseup="javascript:surukle=false;" 
+                           onmouseout="javascript:surukle=false;" 
+                           onmousemove="javascript:if(surukle == true) {gez('divgecmissatislar');}">
+                        GEÇMİŞ SATIŞLAR
+                    </label>
+                </th>
+                <th style="width:10%; text-align:right;">
+                    <a   class="btn btn-danger" onclick="javascript:gecmisSatislariKapat();">X</a>
+                </th>
+            </tr>
+            <tr>
+                <th style="width:15%;">
+                    <select id="selfiltre" class="form-control" onchange="satislariFiltrele()">
+                        <option value="tum">Tüm Satışlar</option>
+                        <option value="bugun">Bugün</option>
+                        <option value="dun">Dün</option>
+                        <option value="bu_hafta">Bu Hafta</option>
+                        <option value="bu_ay">Bu Ay</option>
+                        <option value="nakit">Nakit</option>
+                        <option value="pos">POS</option>
+                        <option value="veresiye">Veresiye</option>
+                    </select>
+                </th>
+                <th style="width:20%;">
+                    <input type="text" id="txtaramasatis" class="form-control" 
+                           placeholder="Ürün ara..." onkeyup="satislariAra()" />
+                </th>
+                <th colspan="2">
+                    <button class="btn btn-success btn-block" onclick="satirSatislariExport()">
+                        📊 Excel'e Aktar
+                    </button>
+                </th>
+                <th colspan="3">
+                    <div style="font-size:12pt; font-weight:bold; color:green;">
+                        Toplam: <span id="lbltoplamsatis">0</span> Satış | 
+                        Tutar: <span id="lbltoplamtutar">0.00</span> ₺
+                    </div>
+                </th>
+            </tr>
+        </thead>
+    </table>
+    
+    <div style="overflow-y:scroll; height:75%;">
+        <table class="table table-striped table-hover table-bordered table-responsive-lg table-light">
+            <thead class="table-dark">
+                <tr>
+                    <th style="width:8%;">Satış ID</th>
+                    <th style="width:12%;">Tarih/Saat</th>
+                    <th style="width:15%;">Ürünler</th>
+                    <th style="width:10%;">Adet</th>
+                    <th style="width:10%;">Tutar</th>
+                    <th style="width:8%;">Ödeme</th>
+                    <th style="width:15%;">Müşteri</th>
+                    <th style="width:12%;">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody id="tblgecmissatislar">
+                <!-- Satış kayıtları buraya gelecek -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Satış Detay Modal -->
+<div id="divsatisdetay" class="tblgenel" style="width:60%; height:70vh; left:20%; top:10%; z-index:10;">
+    <table class="table table-striped table-hover table-bordered table-responsive-lg table-warning">
+        <thead>
+            <tr>
+                <th colspan="4" style="text-align:center;">
+                    <label class="form-control" style="font-size:16pt; font-weight:bold;">
+                        SATIŞ DETAYI
+                    </label>
+                </th>
+                <th style="width:10%; text-align:right;">
+                    <a   class="btn btn-danger btn-sm" onclick="javascript:divsatisdetay.style.visibility = 'hidden';">X</a>
+                </th>
+            </tr>
+            <tr>
+                <th>Satış ID: <span id="lbldetaysatisid"></span></th>
+                <th>Tarih: <span id="lbldetaytarih"></span></th>
+                <th>Ödeme: <span id="lbldetayodeme"></span></th>
+                <th>Müşteri: <span id="lbldetaymusteri"></span></th>
+                <th>Toplam: <span id="lbldetaytoplam"></span> ₺</th>
+            </tr>
+        </thead>
+    </table>
+    
+    <div style="overflow-y:scroll; height:80%;">
+        <table class="table table-striped table-hover table-bordered table-light">
+            <thead>
+                <tr>
+                    <th style="width:15%;">Barkod</th>
+                    <th style="width:35%;">Ürün Adı</th>
+                    <th style="width:10%;">Miktar</th>
+                    <th style="width:15%;">Birim Fiyat</th>
+                    <th style="width:15%;">Ara Tutar</th>
+                    <th style="width:10%;">Birim</th>
+                </tr>
+            </thead>
+            <tbody id="tblsatisdetay">
+                <!-- Satış detayları buraya gelecek -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Developer Console Modal (mevcut HTML'inizin sonuna ekleyin) -->
+<div id="developerModal" class="dev-modal-overlay">
+    <div class="dev-modal-container">
+        <div class="dev-modal-header">
+            <h3>🛠️ Geliştirici Konsolu</h3>
+            <button id="devModalClose" class="dev-close-btn">&times;</button>
+        </div>
+        <div class="dev-modal-body">
+            <div class="dev-tabs">
+                <button class="dev-tab-btn active" data-tab="editor">JS Editor</button>
+                <button class="dev-tab-btn" data-tab="storage">Kayıtlı Kodlar</button>
+                <button class="dev-tab-btn" data-tab="console">Console</button>
+            </div>
+            
+            <!-- JS Editor Tab -->
+            <div id="editor-tab" class="dev-tab-content active">
+                <div class="dev-toolbar">
+                    <button id="saveCode" class="dev-btn save">💾 Kaydet</button>
+                    <button id="runCode" class="dev-btn run">▶️ Çalıştır</button>
+                    <button id="clearCode" class="dev-btn clear">🗑️ Temizle</button>
+                    <label>
+                        <input type="checkbox" id="autoRun"> Sayfa yüklendiğinde otomatik çalıştır
+                    </label>
+                </div>
+                <textarea id="jsCodeEditor" placeholder="Buraya JavaScript kodlarınızı yazın...
+// Örnek:
+console.log('Merhaba Dünya!');
+alert('Özel kodum çalışıyor!');
+
+// DOM manipülasyonu
+document.body.style.backgroundColor = '#f0f0f0';
+
+// Modal açma
+showCustomModal('Test', 'Kodunuz çalıştı!');">
+</textarea>
+            </div>
+            
+            <!-- Storage Tab -->
+            <div id="storage-tab" class="dev-tab-content">
+                <div class="dev-toolbar">
+                    <button id="exportCodes" class="dev-btn">📤 Dışa Aktar</button>
+                    <button id="importCodes" class="dev-btn">📥 İçe Aktar</button>
+                    <input type="file" id="importFile" accept=".json" style="display:none;">
+                </div>
+                <div id="savedCodes">
+                    <p>Henüz kayıtlı kod yok.</p>
+                </div>
+            </div>
+            
+            <!-- Console Tab -->
+            <div id="console-tab" class="dev-tab-content">
+                <div class="dev-toolbar">
+                    <button id="clearConsole" class="dev-btn">🗑️ Console'u Temizle</button>
+                </div>
+                <div id="devConsoleOutput"></div>
+                <div class="dev-console-input">
+                    <input type="text" id="consoleInput" placeholder="JavaScript kodu yazın..." />
+                    <button id="executeConsole">Çalıştır</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+        // Bu kodu Satis.html'in script bölümüne ekle
+document.addEventListener('DOMContentLoaded', function() {
+    var txtbarkod = document.getElementById('txtbarkod');
+    
+    txtbarkod.addEventListener('keydown', function(event) {
+        if (event.keyCode === 13) { // Enter tuşu
+            var barkod = txtbarkod.value.trim();
+            if (barkod !== '') {
+                urunBarkodOku(barkod);
+            }
+        }
+    });
+});
+
+
+// txturunadi2 input'una bu event'i ekle
+document.getElementById('txturunadi2').addEventListener('input', function() {
+    var aramaMetni = this.value.trim();
+    if (aramaMetni.length > 2) {
+        var sonuclar = urunAdiAra(aramaMetni);
+        urunListesiGoster(sonuclar);
+    } else if (aramaMetni === '') {
+        urunListesiGoster();
+    }
+});
+
+
+function favoriUrunEkle() {
+    // Ürün listesi modalını aç
+    tbl = 'tblhaziruruns';
+    divurunlist.style.visibility = 'visible';
+}
+
+sayfaYuklendi();
+    </script>
+</body>
+</html>
