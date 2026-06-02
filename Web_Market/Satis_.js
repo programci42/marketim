@@ -23,7 +23,7 @@ function urunsil(id) {
             }
         }
 
-        lblgeneltutar.innerText = tutar.toFixed(2) + " ₺";
+        lblgeneltutar.innerText = tutar.toFixed(2) + " " + (typeof t === 'function' ? t('currency') : '₺');
     }
 }
 
@@ -81,7 +81,7 @@ function urunekle(u, f, id, m) {
     aratutar(tbluruns.rows.length);
 
     miktar = 1;
-    lblmiktar.innerText = "MİKTAR X1";
+    lblmiktar.innerText = (typeof t === 'function' ? t('quantityLabel') : 'QTY X') + '1';
 }
 
 function urunara(e) {
@@ -107,7 +107,7 @@ function urunara(e) {
         }
 
         txtbarkod.value = '';
-        lblmesaj.innerText = 'Ürün bulunamadı!';
+        lblmesaj.innerText = typeof t === 'function' ? t('productNotFound') : 'Product not found!';
         setTimeout(function () { lblmesaj.innerText = ''; }, 3000);
         txtbarkod.focus();
     }
@@ -145,7 +145,7 @@ function urunara2(ad) {
     }
     
     // Ürün bulunamadı
-    lblmesaj.innerText = 'Ürün bulunamadı!';
+    lblmesaj.innerText = typeof t === 'function' ? t('productNotFound') : 'Product not found!';
     setTimeout(function () { lblmesaj.innerText = ''; }, 3000);
 }
 
@@ -153,15 +153,15 @@ function fiyatgor() {
     var barkod = document.getElementById('txtbarkod2').value.trim();
     
     if (barkod === '') {
-        showCustomModal('Lütfen barkod girin!');
+        showCustomModal(typeof t === 'function' ? t('enterBarcode') : 'Please enter barcode!');
         document.getElementById('txtbarkod2').focus();
         return;
     }
-    
+
     // Ürünü bul
     var urun = urunBul(barkod);
     if (!urun) {
-        showCustomModal('Ürün bulunamadı!\nBarkod: ' + barkod);
+        showCustomModal((typeof t === 'function' ? t('productNotFoundBarcode') : 'Product not found!\nBarcode: ') + barkod);
         document.getElementById('txtbarkod2').focus();
         return;
     }
@@ -213,23 +213,23 @@ function fiyatGuncelleKaydet() {
         
         // Kontroller
         if (barkod === '' || urunAdi === '') {
-            showCustomModal('Önce bir ürün aratın!');
+            showCustomModal(typeof t === 'function' ? t('searchFirst') : 'Search a product first!');
             document.getElementById('txtbarkod2').focus();
             return false;
         }
-        
+
         if (yeniFiyat === '' || isNaN(yeniFiyat) || parseFloat(yeniFiyat) < 0) {
-            showCustomModal('Lütfen geçerli bir fiyat girin!\n(Pozitif sayı olmalıdır)');
+            showCustomModal(typeof t === 'function' ? t('enterValidPrice') : 'Please enter a valid price!\n(Must be a positive number)');
             document.getElementById('txtyeni_fiyat').focus();
             return false;
         }
-        
+
         var fiyatSayisi = parseFloat(yeniFiyat);
-        
+
         // Onay al
-        var onayMesaji = 'FİYAT GÜNCELLEME ONAYI\n\n' +
-                        'Ürün: ' + urunAdi + '\n' +
-                        'Barkod: ' + barkod + '\n' +
+        var onayMesaji = (typeof t === 'function' ? t('priceUpdateConfirm') : 'PRICE UPDATE CONFIRMATION\n\nProduct: ') +
+                        urunAdi + '\n' +
+                        'Barcode: ' + barkod + '\n' +
                         'Yeni Fiyat: ' + fiyatSayisi.toFixed(2) + ' ₺\n\n' +
                         'Fiyatı güncellemek istediğinizden emin misiniz?';
         
@@ -242,9 +242,9 @@ function fiyatGuncelleKaydet() {
         
         if (kaydedildi) {
             // Başarı mesajı
-            showCustomModal('Fiyat başarıyla güncellendi!\n\n' +
-                  'Ürün: ' + urunAdi + '\n' +
-                  'Yeni Fiyat: ' + fiyatSayisi.toFixed(2) + ' ₺');
+            showCustomModal((typeof t === 'function' ? t('priceUpdated') : 'Price updated successfully!\n\nProduct: ') +
+                  urunAdi + '\n' +
+                  (typeof t === 'function' ? t('newPrice') : 'New Price: ') + ' ' + fiyatSayisi.toFixed(2) + ' ' + (typeof t === 'function' ? t('currency') : ''));
             
             // Form alanlarını güncelle
             document.getElementById('txtmevcut_fiyat').value = fiyatSayisi.toFixed(2) + ' ₺';
@@ -298,7 +298,7 @@ function odeme() {
 function Satis(odemeTipi) 
 {
     if (tbluruns.rows.length == 0) {
-        showCustomModal('Satılacak ürün yok!');
+        showCustomModal(typeof t === 'function' ? t('noProductToSell') : 'No product to sell!');
         return;
     }
     
@@ -347,7 +347,7 @@ function Satis(odemeTipi)
     
     animasyonluSatisSonrasiTemizlik();
     // Mevcut işlemleri devam ettir...
-    showCustomModal('Satış tamamlandı! ID: ' + satisId);
+    showCustomModal((typeof t === 'function' ? t('saleComplete') : 'Sale completed! ID: ') + satisId);
     
 }
 
@@ -396,9 +396,9 @@ function urundenFavoriEkle(barkod) {
     if (urun) {
         var eklendi = favoriEkle(urun);
         if (eklendi) {
-            showCustomModal('Ürün favorilere eklendi: ' + urun.Stok_Adi);
+            showCustomModal((typeof t === 'function' ? t('favoriteAdded') : 'Product added to favorites: ') + urun.Stok_Adi);
         } else {
-            showCustomModal('Ürün zaten favorilerde: ' + urun.Stok_Adi);
+            showCustomModal((typeof t === 'function' ? t('alreadyFavorite') : 'Product already in favorites: ') + urun.Stok_Adi);
         }
         return eklendi;
     } else {
