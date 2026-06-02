@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<title>SATIS</title>
+<title>Market POS</title>
 <meta charset="utf-8" />
 <link href = "css/bootstrap.css" rel="stylesheet" />
 <link href = "css/bootstrap.min.css" rel="stylesheet" />
@@ -656,9 +656,11 @@
     }
 }
 </style>
+    <script type="text/javascript" src="i18n.js"></script>
     <script type="text/javascript" src="Genell.js"></script>
     <script type="text/javascript" src="Satis_.js"></script>
     <script type="text/javascript" src="urunler.js"></script>
+    <script type="text/javascript" src="products_intl.js"></script>
 
     <script type="text/javascript">
         var yazlan = false;
@@ -838,9 +840,9 @@
             <thead>
                 <tr>
                     <th colspan="2" style="text-align:center;">
-                    <label class="form-control" onmousedown="javascript:surukle=true;" onmouseup="javascript:surukle=false;" onmouseout="javascript:surukle=false;" onmousemove="javascript:if(surukle == true) {gez('tblmusteriler');}">MÜŞTERİ LİSTESİ</label>
+                    <label class="form-control" onmousedown="javascript:surukle=true;" onmouseup="javascript:surukle=false;" onmouseout="javascript:surukle=false;" onmousemove="javascript:if(surukle == true) {gez('tblmusteriler');}" data-i18n="customerList">CUSTOMER LIST</label>
                     </th>
-                    <th><a   class="btn btn-success btn-block" onclick="javascript:musteriKayitAc();"><img src="res/Add-icon.png" width="20" height="20" />&nbsp;&nbsp;YENİ MÜŞTERİ EKLE</a></th>
+                    <th><a   class="btn btn-success btn-block" onclick="javascript:musteriKayitAc();"><img src="res/Add-icon.png" width="20" height="20" />&nbsp;&nbsp;<span data-i18n="newCustomerAdd">ADD NEW CUSTOMER</span></a></th>
                     <th style="width:20%; text-align:right;"><a   class="btn btn-danger " onclick="javascript:tblmusteriler.style.visibility = 'hidden'; lblmesaj.innerText = ''; txtmusteri.value = '0'; txtbarkod.focus();">X</a></th>
                 </tr>
                 <tr>
@@ -862,7 +864,7 @@
                 <thead>
                     <tr>
                         <th colspan="4">
-                            <label class="form-control" style="font-size:20pt; font-weight:bold; text-align:center;" onmousedown="javascript:surukle=true;" onmouseup="javascript:surukle=false;" onmouseout="javascript:surukle=false;" onmousemove="javascript:if(surukle == true) {gez('divurunlist');}">ÜRÜNLER</label>
+                            <label class="form-control" style="font-size:20pt; font-weight:bold; text-align:center;" onmousedown="javascript:surukle=true;" onmouseup="javascript:surukle=false;" onmouseout="javascript:surukle=false;" onmousemove="javascript:if(surukle == true) {gez('divurunlist');}"><span data-i18n="products">PRODUCTS</span></label>
                         </th>
                         <th style="text-align:right; width:80px;">
                             <a   class="btn btn-danger" onclick="javascript:divurunlist.style.visibility = 'hidden'; txtbarkod.focus();">X</a>
@@ -1269,9 +1271,9 @@
         <table class="table table-striped table-bordered table-hover table-primary">
             <thead>
             <tr><th colspan="4">
-            <label class="form-control" onmousedown="javascript:surukle=true;" onmouseup="javascript:surukle=false;" onmouseout="javascript:surukle=false;" onmousemove="javascript:if(surukle == true) {gez('tblodeme');}">&Ouml;DEME</label>
+            <label class="form-control" onmousedown="javascript:surukle=true;" onmouseup="javascript:surukle=false;" onmouseout="javascript:surukle=false;" onmousemove="javascript:if(surukle == true) {gez('tblodeme');}"><span data-i18n="payment">PAYMENT</span></label>
             </th></tr>
-            <tr><th colspan="2" style="text-align:center;"><label>TUTAR</label></th><th colspan="2" style="text-align:center;"><label>ÖDENEN</label></th></tr>
+            <tr><th colspan="2" style="text-align:center;"><label data-i18n="amount">AMOUNT</label></th><th colspan="2" style="text-align:center;"><label data-i18n="paid">PAID</label></th></tr>
             </thead>
             <tbody>
                 <tr>
@@ -1281,8 +1283,8 @@
                    <input type="text" id="txtodenen" class="form-control"  style="font-family:'MS Reference Sans Serif'; font-size:12pt; font-weight:bold; color:blue; text-align:right;"  onchange="javascript:odeme();" onkeyup="javascript:odeme();" />
                     </td>
                 </tr>
-                <tr><td colspan="2" style="text-align:center;"><label style="font-size:12pt; font-weight:bold;">KALAN</label></td>
-                    <td colspan="2" style="text-align:center;"><label style="font-size:12pt; font-weight:bold;">PARA&nbsp;ÜSTÜ</label></td></tr>
+                <tr><td colspan="2" style="text-align:center;"><label style="font-size:12pt; font-weight:bold;" data-i18n="remaining">REMAINING</label></td>
+                    <td colspan="2" style="text-align:center;"><label style="font-size:12pt; font-weight:bold;" data-i18n="change">CHANGE</label></td></tr>
                 <tr>
                 <td colspan="2"><input type="text"  id="txtkalan" class="form-control" readonly="readonly"  style="font-family:'MS Reference Sans Serif'; font-size:12pt; font-weight:bold; color:maroon; text-align:right;" /></td>
                 <td colspan="2"><input type="text"  id="txtparaustu" class="form-control" readonly="readonly"  style="font-family:'MS Reference Sans Serif'; font-size:12pt; font-weight:bold; color:green; text-align:right;" />
@@ -1314,19 +1316,35 @@
                 </tr>
             </tbody>
             <tfoot>
-                <tr><td colspan="2"><a   class="btn btn-danger btn-block btn-sm" onclick="javascript:tblodeme.style.visibility = 'hidden'; txtbarkod.focus();">İPTAL</a></td>
-                    <td colspan="2"><a   class="btn btn-success btn-block btn-sm" onclick="javascript:Satis('Nakit');">TAMAM</a></td></tr>
+                <tr><td colspan="2"><a   class="btn btn-danger btn-block btn-sm" onclick="javascript:tblodeme.style.visibility = 'hidden'; txtbarkod.focus();" data-i18n="cancel">CANCEL</a></td>
+                    <td colspan="2"><a   class="btn btn-success btn-block btn-sm" onclick="javascript:Satis('Nakit');" data-i18n="ok">OK</a></td></tr>
             </tfoot>
         </table>
     </div>
 
     <div id="divust" class="ust">
         <table class="table table-striped table-hover table-bordered table-responsive-lg table-info">
-            <thead><tr><th colspan="4" style="text-align: center;"><label id="lblbbaslik" class="form-control" style="font-weight: bold; font-family: 'Segoe UI'; font-size: 15pt; color: maroon;">BARKODLU MARKET SATIŞ PROGRAMI</label></th></tr></thead>
+            <thead><tr>
+            <th colspan="3" style="text-align: center;"><label id="lblbbaslik" class="form-control" style="font-weight: bold; font-family: 'Segoe UI'; font-size: 15pt; color: maroon;" data-i18n="appTitle">BARCODE MARKET SALES SYSTEM</label></th>
+            <th style="text-align:right; white-space:nowrap; vertical-align:middle;">
+                <select id="selDil" onchange="I18N.setLanguage(this.value);" style="font-size:11pt; padding:4px 8px; border-radius:6px; border:2px solid #764ba2; background:#f8f4ff; color:#333; cursor:pointer; min-width:140px;">
+                    <option value="en">🇬🇧 English</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr">🇫🇷 Français</option>
+                    <option value="it">🇮🇹 Italiano</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="zh">🇨🇳 中文</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="tr">🇹🇷 Türkçe</option>
+                </select>
+            </th>
+        </tr></thead>
             <tbody>
                 <tr>
-                    <td style="text-align: center;"><label id="lblsecilimusteri" style="font-weight: bold; color:black; height: 30px; font-family: 'Segoe UI';">SEÇİLİ MÜŞTERİ: </label></td>
-                    <td><label id="lblmiktar" class="form-control" style="font-family:'MS Reference Sans Serif'; font-size:15pt; font-weight:bold;">MİKTAR X1</label></td>
+                    <td style="text-align: center;"><label id="lblsecilimusteri" style="font-weight: bold; color:black; height: 30px; font-family: 'Segoe UI';"><span data-i18n="selectedCustomer">SELECTED CUSTOMER</span>: </label></td>
+                    <td><label id="lblmiktar" class="form-control" style="font-family:'MS Reference Sans Serif'; font-size:15pt; font-weight:bold;" data-i18n-qty="quantityLabel">QTY X1</label></td>
                     <td style="width:70%;"><input type="text" id="txtbarkod" onkeydown="javascript:yeniUrunArama(event);" style="font-family:'MS Reference Sans Serif'; font-size:22pt; background-color:#FAFE87; font-weight:bold; border:solid; width:100%; margin:5px; border-color:rebeccapurple; border-radius:5px;" onclick="javascript:txtbarkod.value = '';" /></td>
                     <td><label id="lblgeneltutar" style="color:white;background-Color:Blue;margin:2px;padding:10px;font-weight:bold;font-size:16pt;font-family:Verdana;border-radius:6px;border:outset;border-color:Blue;width:100%;text-align:center;">0</label></td>
                 </tr>
@@ -1362,30 +1380,30 @@
             <thead>
               <tr>
                   <th colspan="5"><input type="checkbox" style="width: 25px; height: 25px;" id="chcfiyat" checked="true" onclick="javascript:chcfiyat2.value = chcfiyat.checked; txtbarkod.focus();" onchange="javascript:txtbarkod.focus();" />&nbsp;
-                  <label for="chcfiyat" style="font-size:12pt; font-weight:bold; margin:15px; font-family:'MS Reference Sans Serif';">Satış sonrası ürünlerin fiyatlarını da güncelle</label></th>
+                  <label for="chcfiyat" style="font-size:12pt; font-weight:bold; margin:15px; font-family:'MS Reference Sans Serif';" data-i18n="updatePriceAfterSale">Update product prices after sale</label></th>
               </tr>
             <tr>
                 <td colspan="5" style="width:20%;">
-                <a   class="btn btn-light" onclick="javascript:musteriListesiAc();" style="width: 120px;"><img src="res/carira.png" width="24" height="24" class="img-fluid" />&nbsp;M&uuml;&#351;teri&nbsp;Se&ccedil;</a>&nbsp;&nbsp;
+                <a   class="btn btn-light" onclick="javascript:musteriListesiAc();" style="width: 120px;"><img src="res/carira.png" width="24" height="24" class="img-fluid" />&nbsp;<span data-i18n="selectCustomer">Select Customer</span></a>&nbsp;&nbsp;
 
-                <a   class="btn btn-light" onclick="javascript:musteriKayitAc();" style="width: 150px;"><img src="res/carira.png" width="24" height="24" class="img-fluid" />&nbsp;M&uuml;&#351;teri&nbsp;Kaydet</a>&nbsp;&nbsp;
-                
-                <a   style="font-weight:bold; color:#28a745; width: 120px;" class="btn btn-light" onclick="javascript:tbl = 'tbluruns'; divurunlist.style.visibility = 'visible';"><img src="res/Add-icon.png" />&nbsp;&nbsp;&Uuml;r&uuml;n&nbsp;Ekle</a>&nbsp;&nbsp;
+                <a   class="btn btn-light" onclick="javascript:musteriKayitAc();" style="width: 150px;"><img src="res/carira.png" width="24" height="24" class="img-fluid" />&nbsp;<span data-i18n="saveCustomer">Save Customer</span></a>&nbsp;&nbsp;
 
-                <a   class="btn btn-light" onclick="javascript:urunKayitAc();" style="width: 120px;"><img src="res/Add-icon.png" width="22" height="22" />&nbsp;&nbsp;Yeni Ürün Kaydet</a>&nbsp;&nbsp;
-                
-                <a   class="btn btn-light" style="width: 120px;" onclick="javascript:veriYonetimiAc();"><img src="res/database.png" width="22" height="22" />&nbsp;&nbsp;Veri Yönetimi</a>&nbsp;&nbsp;
+                <a   style="font-weight:bold; color:#28a745; width: 120px;" class="btn btn-light" onclick="javascript:tbl = 'tbluruns'; divurunlist.style.visibility = 'visible';"><img src="res/Add-icon.png" />&nbsp;&nbsp;<span data-i18n="addProduct">Add Product</span></a>&nbsp;&nbsp;
 
-                <a   class="btn btn-light" style="font-weight:bold; width: 120px;" onclick="javascript:Makbuz();"><img src="res/stok.png" width="22" height="22" />&nbsp;&nbsp;Fi&#351;&nbsp;&nbsp;</a>
+                <a   class="btn btn-light" onclick="javascript:urunKayitAc();" style="width: 120px;"><img src="res/Add-icon.png" width="22" height="22" />&nbsp;&nbsp;<span data-i18n="newProduct">New Product</span></a>&nbsp;&nbsp;
+
+                <a   class="btn btn-light" style="width: 120px;" onclick="javascript:veriYonetimiAc();"><img src="res/database.png" width="22" height="22" />&nbsp;&nbsp;<span data-i18n="dataManagement">Data Mgmt</span></a>&nbsp;&nbsp;
+
+                <a   class="btn btn-light" style="font-weight:bold; width: 120px;" onclick="javascript:Makbuz();"><img src="res/stok.png" width="22" height="22" />&nbsp;&nbsp;<span data-i18n="receipt">Receipt</span></a>
                 </td>
             </tr>
                 
                 <tr>
-                <th style="text-align: center;">SİL</th>
-                <th style="width:45%;"><center><label>STOK_ADI</label></center></th>
-                <th><center><label>&Uuml;R&Uuml;N_F&#304;YATI</label></center></th>
-                <th><center><label>&Uuml;R&Uuml;N_MİKTARI</label></center></th>
-                <th style="width:15%;"><center><label>ARA_TUTAR</label></center></th>
+                <th style="text-align: center;" data-i18n="del">DEL</th>
+                <th style="width:45%;"><center><label data-i18n="productNameCol">PRODUCT NAME</label></center></th>
+                <th><center><label data-i18n="productPrice">PRICE</label></center></th>
+                <th><center><label data-i18n="productQty">QTY</label></center></th>
+                <th style="width:15%;"><center><label data-i18n="subtotal">SUBTOTAL</label></center></th>
                 </tr>
             </thead>
             <tbody id="tbluruns">
@@ -1402,12 +1420,12 @@
             
              <tbody>
                 <tr>
-                    <td><a   class="btn btn-block btn-light " onclick="javascript:nakitodeme();"><img src="res/payment-icon.png" width="22" height="22" />&nbsp;Nakit</a></td>
-                    <td><a   class="btn btn-block btn-light " onclick="javascript:if(tbluruns.rows.length == 0) { alert('Satmak icin bi sey sec!'); return; } if (window.confirm('POS satisi yapilsin mi?') == true) { Satis('Pos'); }"><img src="res/card.png"  width="22" height="22" />&nbsp;Pos</a></td>
+                    <td><a   class="btn btn-block btn-light " onclick="javascript:nakitodeme();"><img src="res/payment-icon.png" width="22" height="22" />&nbsp;<span data-i18n="cash">Cash</span></a></td>
+                    <td><a   class="btn btn-block btn-light " onclick="javascript:if(tbluruns.rows.length == 0) { alert(t('noProductToSell')); return; } if (window.confirm(t('posConfirm')) == true) { Satis('Pos'); }"><img src="res/card.png"  width="22" height="22" />&nbsp;<span data-i18n="pos">POS</span></a></td>
                 </tr>
                 <tr>
-                    <td><a   class="btn btn-block btn-light " onclick="javascript:veresiye();"><img src="res/cari_kart.png" width="22" height="22" />&nbsp;Veresiye</a></td>
-                    <td><a   class="btn btn-block btn-light " onclick="javascript:if(window.confirm('Bu satis iptal edilsin mi?') == true) { satisSonrasiTemizlik(); }"><img src="res/Satis_yok.png" width="22" height="22" />&nbsp;Satış iptal</a></td>
+                    <td><a   class="btn btn-block btn-light " onclick="javascript:veresiye();"><img src="res/cari_kart.png" width="22" height="22" />&nbsp;<span data-i18n="credit">Credit</span></a></td>
+                    <td><a   class="btn btn-block btn-light " onclick="javascript:if(window.confirm(t('cancelConfirm')) == true) { satisSonrasiTemizlik(); }"><img src="res/Satis_yok.png" width="22" height="22" />&nbsp;<span data-i18n="cancelSale">Cancel Sale</span></a></td>
                 </tr>
                 <!--
                 <tr>
@@ -1416,16 +1434,16 @@
                     -->
                 <tr>
                 <td colspan="1">
-                <a   class="btn btn-light btn-block " onclick="javascript:tblfiyatgor.style.visibility = 'visible'; txtbarkod2.value = ''; txturunadi.value = ''; txtfiyat.value = '0'; txtbarkod2.focus();">
-                <img src="res/ticket-icon.png" alt=""  width="22" height="22" />&nbsp;&nbsp;Fiyat&nbsp;G&ouml;r</a></td>
-                <td><a   class="btn btn-light btn-block" onclick="javascript:favori_ac();"><img src="res/yildiz.png" alt="" width="22" height="22" />&nbsp;Favoriler</a></td>
+                <a   class="btn btn-light btn-block " onclick="javascript:tblfiyatgor.style.visibility = 'visible'; txtbarkod2.value = ''; txturunadi.value = ''; txtbarkod2.focus();">
+                <img src="res/ticket-icon.png" alt=""  width="22" height="22" />&nbsp;&nbsp;<span data-i18n="viewPrice">Price View</span></a></td>
+                <td><a   class="btn btn-light btn-block" onclick="javascript:favori_ac();"><img src="res/yildiz.png" alt="" width="22" height="22" />&nbsp;<span data-i18n="favorites">Favorites</span></a></td>
                 </tr>
                 <tr>
-                    <td colspan="1"><a   class="btn btn-block btn-light" onclick="javascript:gecmisSatislariAc();"><img src="res/history.png" width="22" height="22" />&nbsp;Geçmiş Satışlar</a></td>
-                    <td><a   class="btn btn-block btn-light" onclick="javascript:marketBilgileriAc();"><img src="res/marketim.png" width="22" height="22" />&nbsp;Market Bilgileri</a></td>
+                    <td colspan="1"><a   class="btn btn-block btn-light" onclick="javascript:gecmisSatislariAc();"><img src="res/history.png" width="22" height="22" />&nbsp;<span data-i18n="pastSales">Past Sales</span></a></td>
+                    <td><a   class="btn btn-block btn-light" onclick="javascript:marketBilgileriAc();"><img src="res/marketim.png" width="22" height="22" />&nbsp;<span data-i18n="marketInfo">Market Info</span></a></td>
                 </tr>
                 <tr>
-                    <td><a class="btn btn-block btn-light" onclick="javascript:lisansBilgileriGoster();"><img src="res/pwd.png" width="22" height="22" />&nbsp;Lisans Bilgileri </a></td>
+                    <td><a class="btn btn-block btn-light" onclick="javascript:lisansBilgileriGoster();"><img src="res/pwd.png" width="22" height="22" />&nbsp;<span data-i18n="licenseInfo">License Info</span></a></td>
                     <td>&nbsp;</td>
                 </tr>
             </tbody>
@@ -1444,7 +1462,7 @@
                     <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '4';">4</a></td>
                     <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '5';">5</a></td>
                     <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '6';">6</a></td>
-                    <td><a   class="btn btn-block btn-danger  lblparasal" onclick="javascript:if(txtbarkod.value != '') {txtbarkod.value = txtbarkod.value.toString().slice(0, txtbarkod.value.toString().length - 1);}">SİL</a></td>
+                    <td><a   class="btn btn-block btn-danger  lblparasal" onclick="javascript:if(txtbarkod.value != '') {txtbarkod.value = txtbarkod.value.toString().slice(0, txtbarkod.value.toString().length - 1);}" data-i18n="del_btn">DEL</a></td>
                 </tr>
                <tr>
                     <td><a   class="btn btn-block btn-light  lblparasal" onclick="javascript:txtbarkod.value = txtbarkod.value + '1';">1</a></td>
@@ -1470,13 +1488,13 @@
         <table class="table table-striped table-hover table-bordered table-warning table-responsive-md">
             <thead>
                 <tr>
-                <th><label class="form-control"><img src="res/yildiz.png" width="22" height="22" />&nbsp;FAVORI ÜRÜNLER</label></th>
+                <th><label class="form-control"><img src="res/yildiz.png" width="22" height="22" />&nbsp;<span data-i18n="favoriteProducts">FAVORITE PRODUCTS</span></label></th>
                 <th style="text-align:right;"><a   class="btn btn-danger" title="KAPAT" onclick="javascript:favori_kapat();">X</a></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="2"><a   class="btn btn-block btn-light" onclick="javascript:tbl = 'tblhaziruruns'; divurunlist.style.visibility = 'visible';"><img src="res/Add-icon.png" alt="Favoriler" />&nbsp;ÜRÜN&nbsp;EKLE</a></td>
+                    <td colspan="2"><a   class="btn btn-block btn-light" onclick="javascript:tbl = 'tblhaziruruns'; divurunlist.style.visibility = 'visible';"><img src="res/Add-icon.png" alt="Favorites" />&nbsp;<span data-i18n="addFavorite">ADD PRODUCT</span></a></td>
                 </tr>
             </tbody>
         </table>
@@ -1756,6 +1774,21 @@ function favoriUrunEkle() {
 }
 
 sayfaYuklendi();
+
+    // Initialize i18n after all scripts are loaded
+    (function initI18N() {
+        // Restore saved language and set dropdown
+        var savedLang = localStorage.getItem('pos_language') || 'en';
+        var selDil = document.getElementById('selDil');
+        if (selDil) {
+            selDil.value = savedLang;
+        }
+        I18N.init();
+        // Load country products for the saved language
+        if (typeof INTL_PRODUCTS !== 'undefined') {
+            I18N.loadCountryProducts(savedLang);
+        }
+    })();
     </script>
 </body>
 </html>
